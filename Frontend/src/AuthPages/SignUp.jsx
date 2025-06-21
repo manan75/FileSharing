@@ -1,6 +1,9 @@
 // src/pages/Signup.jsx
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+
+const backendURL = import.meta.env.backend_URL;
 
 const Signup = () => {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
@@ -9,10 +12,14 @@ const Signup = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    // send form to backend
-    console.log("Signup submitted:", form);
+    try{
+      const {data} = await axios.post(backendURL+'/api/auth/register', form, {withCredentials:true})
+    }
+    catch{
+
+    }
   };
+
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
